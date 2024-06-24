@@ -13,26 +13,6 @@ const handleAddBook = (req, h) => {
     reading,
   } = req.payload;
 
-  const id = nanoid(16);
-  const finished = readPage === pageCount;
-  const insertedAt = new Date().toISOString();
-  const updatedAt = insertedAt;
-
-  const newBook = {
-    id,
-    name,
-    year,
-    author,
-    summary,
-    publisher,
-    pageCount,
-    readPage,
-    finished,
-    reading,
-    insertedAt,
-    updatedAt,
-  };
-
   if (name === undefined) {
     const response = h.response({
       status: 'fail',
@@ -53,6 +33,26 @@ const handleAddBook = (req, h) => {
     response.code(400);
     return response;
   }
+
+  const id = nanoid(16);
+  const finished = readPage === pageCount;
+  const insertedAt = new Date().toISOString();
+  const updatedAt = insertedAt;
+
+  const newBook = {
+    id,
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readPage,
+    finished,
+    reading,
+    insertedAt,
+    updatedAt,
+  };
 
   books.push(newBook);
 

@@ -1,7 +1,6 @@
 const books = require('../books');
 
 const handleEditBook = (req, h) => {
-  const { bookId } = req.params;
   const {
     name,
     year,
@@ -12,6 +11,7 @@ const handleEditBook = (req, h) => {
     readPage,
     reading,
   } = req.payload;
+  const { bookId } = req.params;
   const updatedAt = new Date().toISOString();
   const bookIndex = books.findIndex((book) => book.id === bookId);
 
@@ -59,13 +59,15 @@ const handleEditBook = (req, h) => {
     return response;
   }
 
-  const response = h.response({
-    status: 'fail',
-    message: 'Gagal memperbarui buku. Id tidak ditemukan',
-  });
+  if (bookIndex === -1) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal memperbarui buku. Id tidak ditemukan',
+    });
 
-  response.code(404);
-  return response;
+    response.code(404);
+    return response;
+  }
 };
 
 module.exports = handleEditBook;
